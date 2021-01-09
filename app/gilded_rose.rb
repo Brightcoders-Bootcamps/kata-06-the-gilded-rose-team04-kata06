@@ -1,17 +1,22 @@
-require_relative './rules'
-class GildedRose
+# frozen_string_literal: true
 
+require_relative './rules'
+
+# Main class of the exercise for update items
+class GildedRose
   def initialize(items)
-      @items = items
+    @items = items
+    @rule = Rules.new
   end
 
-  def update_quality()
+  def update_quality
     @items.each do |item|
-      Rules.run_rules(item)
+      @rule.run_rules(item)
     end
   end
 end
 
+# Class item of the exercise
 class Item
   attr_accessor :name, :sell_in, :quality
 
@@ -21,7 +26,7 @@ class Item
     @quality = quality
   end
 
-  def to_s()
+  def to_s
     "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
