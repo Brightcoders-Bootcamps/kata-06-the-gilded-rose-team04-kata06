@@ -1,0 +1,14 @@
+Reglas
+1. La calidad de un articulo nunca es superior a 50 -> Regla tipo propiedad
+2. La calidad de un articulo nunca es negativa -> Regla tipo propiedad (Ver sulfuro)
+
+
+3. Backstage passes aumenta a 2 cuando Sellin <= 10 or aumentan en 3 si Sellin <=5 if sellin < 1 entonces 0
+4. Aged Brie aumenta su calidad en cada iteracion  en no mas de 50 -> Regla tipo propiedad
+
+5. Sulfuras nunca disminuye su calidad tampoco puede venderse -> Regla tipo propiedad, y EXCEPCIONAL
+
+6. Elemento conjurado se degrada 2 veces mas rapido -> Regla Simple
+
+
+7. Degradación de 1 en 1 en cada iteracion -> Regla Simpleclass GildedRose
