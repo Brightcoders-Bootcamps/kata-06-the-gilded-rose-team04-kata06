@@ -31,32 +31,27 @@ class Rules
         end
     end
 
-    #calculate max quality 50 
-    # if sulfura == 80
-    def check_quality_max(item, type)
-        item.quality = 50 if item.quality > 50
-        item.quality = 80 if type == 'Sulfuras'
+    #Backstage passes aumenta a 2 cuando Sellin <= 10 or aumentan en 3 si Sellin <=5 if sellin < 1 entonces 0
+    def backstage_quality_calculator(item)
+        item.quality += 2 if item.sell_in - item.quality <= 10
+        item.quality += 3 if item.sell_in - item.quality <= 5
     end
 
-    # calculate min quality (always 0 not negative numbers)
-    
-    def check_quality_min(item)
-        
+    #Aged Brie aumenta su calidad en cada iteracion  en no mas de 50 -> Regla tipo propiedad
+    def aged_brie_quality_calculator(item, type)
+        item.quality += 1 if item.quality < 51
     end
 
-    #
-    def backstage_quality_calculator
+    def sulfuras_quality_calculator(item, type)
+        item.quality = 80
+        item.sell_in = -1
     end
 
-    def aged_brie_quality_calculator
+    def conjured_quality_calculator(item)
+        item.quality -= 2 if item.quality > 0
     end
 
-    def sulfuras_quality_calculator
-    end
-
-    def conjured_quality_calculator
-    end
-
-    def normal_quality_calculator
+    def normal_quality_calculator(item, type)
+        item.quality -= 1 if item.quality > 0
     end
 end
