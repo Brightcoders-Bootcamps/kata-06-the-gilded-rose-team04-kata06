@@ -33,6 +33,7 @@ class Rules
   # "Aged Brie" actually increases in Quality the older it gets the Quality of an item is never more than 50
   def aged_brie_quality_calculator(item)
     item.quality += 1 if item.quality < 51
+    item.quality = 50 if item.quality > 50
     item
   end
 

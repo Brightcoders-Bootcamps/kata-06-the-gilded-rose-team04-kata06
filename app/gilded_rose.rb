@@ -10,13 +10,13 @@ class GildedRose
   end
 
   def update_quality
-    @items.each do |item|
-      @rule.run_rules(item)
+    @items.each_with_index do |item, index|
+      @items[index] = @rule.run_rules(item)
     end
   end
 end
 
-# Class item of the exercise
+# Class item of the exerise
 class Item
   attr_accessor :name, :sell_in, :quality
 
