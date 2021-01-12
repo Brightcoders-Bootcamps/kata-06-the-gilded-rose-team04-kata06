@@ -1,51 +1,75 @@
 # frozen_string_literal: true
+
 require_relative '../app/rules'
 require_relative '../app/gilded_rose'
-require_relative '../app/texttest_fixture'
 require 'rspec'
-
 
 # class testing
 describe Rules do
-    
-    # testing backstage_quality_calculator method 
-    describe ".backstage_quality_calculator" do
-        it "returns the quality of an item" do
-            items = [
-                Item.new(name = 'Backstage passes to a TAFKAL80ETC concert', sell_in = 15, quality = 20),
-                Item.new(name = 'Backstage passes to a TAFKAL80ETC concert', sell_in = 10, quality = 49),
-            ]
-            results = [
-                Item.new(name = 'Backstage passes to a TAFKAL80ETC concert', sell_in = 15, quality = 20),
-                Item.new(name = 'Backstage passes to a TAFKAL80ETC concert', sell_in = 10, quality = 50),
-            ]   
-            gilded_rose = GildedRose.new items
-            (0...2).each do |day|
-                gilded_rose.update_quality
-            end
-            expect(items) == (results)
-        end
+  # testing backstage_quality_calculator method
+  describe '.backstage_quality_calculator' do
+    it 'returns the quality of an item' do
+      items = [
+        Item.new('Backstage passes to a TAFKAL80ETC concert', 15, 20),
+        Item.new('Backstage passes to a TAFKAL80ETC concert', 10, 49)
+      ]
+      gilded_rose = GildedRose.new items
+      2.times { gilded_rose.update_quality }
+      expect(items).to match_array([
+                                     have_attributes(name: 'Backstage passes to a TAFKAL80ETC concert', sell_in: 15,
+                                                     quality: 20),
+                                     have_attributes(name: 'Backstage passes to a TAFKAL80ETC concert', sell_in: 10,
+                                                     quality: 50)
+                                   ])
     end
-    
-    describe ".aged_brie_quality_calculator" do 
-        it "returns the incresed quality of an item" do
-            items=[
-            Item.new(name = 'Aged Brie', sell_in = 2, quality = 10),
-            Item.new(name = 'Aged Brie', sell_in = 2, quality = 0),
-            Item.new(name = 'Aged Brie', sell_in = 2, quality = 40),
-            Item.new(name = 'Aged Brie', sell_in = 2, quality = 60)
-            ]
-            results = [
-                Item.new(name = 'Aged Brie', sell_in = 2, quality = 12),
-                Item.new(name = 'Aged Brie', sell_in = 2, quality = 2),
-                Item.new(name = 'Aged Brie', sell_in = 2, quality = 42),
-                Item.new(name = 'Aged Brie', sell_in = 2, quality = 50)
-            ]
-            gilded_rose = GildedRose.new items
-            (0...2).each do |day|
-                gilded_rose.update_quality
-            end
-            expect(items) == (results)
-        end
+  end
+
+  describe '.aged_brie_quality_calculator' do
+    it 'returns the incresed quality of an item' do
+      items = [
+        Item.new('Aged Brie', 2, 10),
+        Item.new('Aged Brie', 2, 0),
+        Item.new('Aged Brie', 2, 40),
+        Item.new('Aged Brie', 2, 60)
+      ]
+      gilded_rose = GildedRose.new items
+      2.times { gilded_rose.update_quality }
+      expect(items).to match_array([
+                                     have_attributes(name: 'Aged Brie', sell_in: 2, quality: 12),
+                                     have_attributes(name: 'Aged Brie', sell_in: 2, quality: 2),
+                                     have_attributes(name: 'Aged Brie', sell_in: 2, quality: 42),
+                                     have_attributes(name: 'Aged Brie', sell_in: 2, quality: 50)
+                                   ])
     end
+  end
+
+  describe '.sulfuras_quality_calculator' do
+    it 'ever return 80 of quality' do
+      items = [
+        Item.new('Sulfuras, Hand of Ragnaros', 0, 90),
+        Item.new('Sulfuras, Hand of Ragnaros', -1, 50)
+      ]
+      gilded_rose = GildedRose.new items
+      2.times { gilded_rose.update_quality }
+      expect(items).to match_array([
+                                     have_attributes(name: 'Sulfuras, Hand of Ragnaros', sell_in: -1, quality: 80),
+                                     have_attributes(name: 'Sulfuras, Hand of Ragnaros', sell_in: -1, quality: 80)
+                                   ])
+    end
+  end
+
+  describe '.conjured_quality_calculator' do
+    it 'return item conjured with -2 of quality per day' do
+      items = [
+        Item.new('Conjured Mana Cake', 3, 20),
+        Item.new('Conjured Mana Cake', 3, 20)
+      ]
+      gilded_rose = GildedRose.new items
+      2.times { gilded_rose.update_quality }
+      expect(items).to match_array([
+                                     have_attributes(name: 'Conjured Mana Cake', sell_in: 3, quality: 16),
+                                     have_attributes(name: 'Conjured Mana Cake', sell_in: 3, quality: 16)
+                                   ])
+    end
+  end
 end
