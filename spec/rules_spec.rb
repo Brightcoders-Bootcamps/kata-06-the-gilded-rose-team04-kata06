@@ -72,4 +72,19 @@ describe Rules do
                                    ])
     end
   end
+  
+  describe '.normal_quality_calculator' do
+    it 'return normal item with -1 quality per day' do
+      items = [
+        Item.new('Normal item of Landlord',3,10),
+        Item.new('Normal item of Landlord',2,5)
+      ]
+      gilded_rose = GildedRose.new items
+      2.times { gilded_rose.update_quality }
+      expect(items).to match_array([
+                                     have_attributes(name: 'Normal item of Landlord', sell_in: 3, quality: 8),
+                                     have_attributes(name: 'Normal item of Landlord', sell_in: 2, quality: 3)
+                                   ])
+    end
+  end
 end
